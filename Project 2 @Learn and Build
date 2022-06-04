@@ -1,0 +1,101 @@
+#include<iostream>
+#include<fstream>
+#include<string.h>
+#include<stdlib.h> 
+using namespace std;
+
+void login();
+void registration();
+void forgot();
+
+
+int main(){
+	int c;
+	cout<<"          Welcome to the Log in page       \n\n";
+    cout<<"             MENU                  \n\n";
+    cout<<"choice | Press 1 for Registration       |        \n";
+    cout<<"choice | Press 2 for Log In             |        \n";
+    cout<<"choice | Press 3 for Forgot Credentials |        \n\n";
+    cout<<"                Enter your Choice                \n";
+    cin>>c;
+    switch(c){
+ 
+          case 1:
+               registration();
+               break;
+          case 2:
+               login();
+               break;
+          case 3:
+                forgot();
+                break;
+         default:
+               {cout<<"Invalid Choice Enter Again\n";
+               break;}
+               
+}}
+
+void registration(){
+	 string userID,password,id, pass;
+	 cout<<"Enter Username -   ";
+	 cin>>userID;
+	 cout<<endl;
+	 cout<<"Enter Password -  ";
+	 cin>>password;
+
+	 ofstream write("record.txt",ios::app);
+	 write<<userID<<" "<<password<<endl;
+	 cout<<"Your Registration has been successfully completed\n";
+	 main();
+}
+
+void login(){
+      int count=0;
+      string userid,pass,id,password;
+      cout<<"Enter your username  -  ";
+      cin>>userid;
+      cout<<"\n Enter Password - ";
+      cin>>pass;
+
+
+      ifstream input("record.txt");
+      while(input>>id>>password){
+      	if(userid==id&&pass==password){
+      		count=1;
+      	}
+      }
+      input.close();
+      if(count==1) {
+        cout<<"Welcome Login successfully\n";
+        main();
+    }
+      else{ 
+       cout<<"Check your username\n";
+       main();
+
+      }
+}
+void forgot(){
+    int count=0;
+    string userid,id,password;
+    cout<<"You have forget your password ?  Don't worry!";
+    cout<<"Enter your username - ";
+    cin>>userid;
+
+    ifstream finds("record.txt");
+    while(finds>>id>>password){
+        if(userid==id){
+            count=1;
+        }
+    }
+    finds.close();
+    if(count==1){
+        cout<<"Your account has been found your password is = "<<password;
+        main();
+    }
+    else {
+        cout<<"NO account is exits";
+        main();
+    }
+
+}
